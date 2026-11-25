@@ -1,35 +1,27 @@
 
 {
   "id": "/",
-  "name": "Zivo Blur - Online Video, Image & Screenshot Blur Tool",
+  "name": "Zivo Blur",
   "short_name": "Zivo Blur",
-  "description": "Blur sensitive info, faces, text, IDs, and chats in videos, images, and screenshots locally in your browser.",
+  "description": "Blur sensitive information in images, videos and screenshots.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0b1120",
   "theme_color": "#0f172a",
-  "categories": ["productivity", "utilities"],
-  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "/icons/iconicon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "/icons/iconicon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
