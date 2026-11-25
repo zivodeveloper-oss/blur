@@ -1,0 +1,25 @@
+{
+  "name": "Zivo Blur – Online Video, Image & Screenshot Blur Tool",
+  "short_name": "Zivo Blur",
+  "description": "Blur sensitive info, faces, text, IDs, and chats in videos, images, and screenshots locally in your browser.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b1120",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='%23111827'/%3E%3Ccircle cx='256' cy='256' r='148' fill='none' stroke='url(%23g)' stroke-width='28' stroke-dasharray='46 28'/%3E%3Ccircle cx='256' cy='256' r='82' fill='url(%23g)'/%3E%3Cpath d='M388 86l18 42 42 18-42 18-18 42-18-42-42-18 42-18z' fill='%2338bdf8'/%3E%3C/svg%3E",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' fill='%23111827'/%3E%3Ccircle cx='256' cy='256' r='126' fill='none' stroke='url(%23g)' stroke-width='24' stroke-dasharray='40 24'/%3E%3Ccircle cx='256' cy='256' r='70' fill='url(%23g)'/%3E%3Cpath d='M364 114l14 32 32 14-32 14-14 32-14-32-32-14 32-14z' fill='%2338bdf8'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

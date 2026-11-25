@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Zivo Blur – Free Online Video Blur, Image Blur & Screenshot Blur Tool</title>
+  <meta name="description" content="Blur sensitive info, faces, text, IDs, and chats in videos, images, and screenshots for free. Local browser processing with zero server uploads and offline PWA support." />
+  <meta name="theme-color" content="#0f172a" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Zivo Blur – Free Online Video Blur, Image Blur & Screenshot Blur Tool" />
+  <meta property="og:description" content="Hide sensitive info in photos, screenshots, and videos directly on your device." />
+  <meta property="og:site_name" content="Zivo Blur" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='%23111827'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='url(%23g)' stroke-width='4' stroke-dasharray='6 4'/%3E%3Ccircle cx='32' cy='32' r='9' fill='url(%23g)'/%3E%3Cpath d='M49 11l2.2 4.8L56 18l-4.8 2.2L49 25l-2.2-4.8L42 18l4.8-2.2z' fill='%2338bdf8'/%3E%3C/svg%3E" />
+  <link rel="manifest" href="manifest.json" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Zivo Blur",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Windows, Android, macOS, Linux, iOS",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online video blur, image blur, and screenshot blur tool running locally in your browser."
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #131c31;
+      --surface-2: #1c2842;
+      --border: #2b3b5e;
+      --text: #f8fafc;
+      --muted: #9fb0cb;
+      --primary: #38bdf8;
+      --accent: #a855f7;
+      --success: #34d399;
+      --warning: #fbbf24;
+      --radius: 18px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at top, #17233d 0%, var(--bg) 58%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1020px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-card {
+      background: rgba(19, 28, 49, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
+    }
+
+    .brand-row {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-name {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #7dd3fc, #d8b4fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pill-status {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(52, 211, 153, 0.14);
+      color: var(--success);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+    }
+    .pill-status.offline {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--warning);
+      border-color: rgba(251, 191, 36, 0.4);
+    }
+
+    h1 {
+      font-size: clamp(1.05rem, 2.2vw, 1.38rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 18px;
+    }
+
+    .primary-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 13px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.12s ease, filter 0.15s ease, border-color 0.15s ease;
+      user-select: none;
+    }
+    .btn:active:not(:disabled) { transform: scale(0.98); }
+    .btn:hover:not(:disabled) { border-color: #64748b; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-upload {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border: none;
+      color: #fff;
+      padding: 0 22px;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+    .btn-upload:hover { filter: brightness(1.08); }
+
+    .btn-pen.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--primary);
+      color: #7dd3fc;
+    }
+
+    .btn-save {
+      background: var(--success);
+      border: none;
+      color: #052e16;
+    }
+
+    .btn-install {
+      background: rgba(168, 85, 247, 0.16);
+      border-color: rgba(168, 85, 247, 0.45);
+      color: #e9d5ff;
+    }
+
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip:hover:not(:disabled) { color: var(--text); }
+    .chip:disabled { opacity: 0.4; cursor: not-allowed; }
+    .chip.active {
+      background: rgba(56, 189, 248, 0.16);
+      border-color: var(--primary);
+      color: var(--text);
+    }
+
+    .slider-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      padding: 0 12px;
+      border-radius: 11px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .slider-pill input {
+      width: 85px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .canvas-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .drop-area {
+      min-height: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-image: radial-gradient(#263554 1px, transparent 1px);
+      background-size: 18px 18px;
+      overflow: auto;
+    }
+    .drop-area.dragover {
+      outline: 2px dashed var(--primary);
+      outline-offset: -8px;
+      background-color: rgba(56, 189, 248, 0.06);
+    }
+
+    .empty-state {
+      text-align: center;
+      max-width: 380px;
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(11, 17, 32, 0.78);
+      border: 1px dashed var(--border);
+    }
+    .empty-state p { font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
+
+    canvas#editorCanvas {
+      max-width: 100%;
+      max-height: 68vh;
+      border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      cursor: crosshair;
+      touch-action: none;
+      display: none;
+    }
+
+    .video-bar, .export-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: #0e1526;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+    }
+    .video-bar.visible, .export-bar.visible { display: flex; }
+    .video-bar input[type="range"] { flex: 1; min-width: 120px; accent-color: var(--primary); }
+
+    .seo-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+    .seo-note h2 { font-size: 0.98rem; color: var(--text); margin-bottom: 6px; }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 18px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .btn { height: 46px; }
+      .chip, .slider-pill { height: 42px; }
+      .drop-area { min-height: 310px; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <section class="hero-card">
+    <div class="brand-row">
+      <svg width="34" height="34" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#38bdf8"/>
+            <stop offset="100%" stop-color="#a855f7"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="18" fill="#1c2842" stroke="url(#logoGrad)" stroke-width="2.5"/>
+        <circle cx="32" cy="32" r="17" stroke="url(#logoGrad)" stroke-width="4" stroke-dasharray="6 4"/>
+        <circle cx="32" cy="32" r="9" fill="url(#logoGrad)"/>
+        <path d="M49 11l2.2 4.8L56 18l-4.8 2.2L49 25l-2.2-4.8L42 18l4.8-2.2z" fill="#38bdf8"/>
+      </svg>
+      <span class="brand-name">Zivo Blur</span>
+      <span class="pill-status" id="netBadge">Offline Ready</span>
+    </div>
+
+    <h1>Free Online Video Blur, Image Blur &amp; Screenshot Blur Tool</h1>
+    <p class="subtitle">Hide sensitive info, faces, phone numbers, IDs, and chats in images, screenshots, and videos right on your device. Zero server uploads.</p>
+
+    <div class="primary-actions">
+      <input type="file" id="fileInput" accept="image/*,video/*" hidden />
+      <button type="button" class="btn btn-upload" id="uploadBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Upload File
+      </button>
+
+      <button type="button" class="btn btn-pen active" id="penTopBtn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        Blur Pen
+      </button>
+
+      <button type="button" class="btn btn-save" id="downloadBtn" disabled>
+        ⬇ Download
+      </button>
+
+      <button type="button" class="btn btn-install" id="installBtn">
+        + Install App
+      </button>
+    </div>
+  </section>
+
+  <div class="toolbar" role="toolbar" aria-label="Blur Shapes and Controls">
+    <div class="group">
+      <button type="button" class="chip active" data-shape="pen" id="shapePen">✎ Pen</button>
+      <button type="button" class="chip" data-shape="square" id="shapeSquare">□ Square</button>
+      <button type="button" class="chip" data-shape="rect" id="shapeRect">▭ Rectangle</button>
+      <button type="button" class="chip" data-shape="circle" id="shapeCircle">◯ Circle</button>
+    </div>
+
+    <div class="group">
+      <button type="button" class="chip active" data-mode="blur" id="modeBlur">💧 Blur</button>
+      <button type="button" class="chip" data-mode="pixelate" id="modePixel">▦ Pixel</button>
+
+      <label class="slider-pill">
+        <span>Strength</span>
+        <input type="range" id="strengthInput" min="6" max="65" value="26" />
+        <strong id="strengthLabel" style="color:var(--text);">26px</strong>
+      </label>
+
+      <label class="slider-pill" id="penSizePill">
+        <span>Pen</span>
+        <input type="range" id="penSizeInput" min="12" max="120" value="42" />
+        <strong id="penSizeLabel" style="color:var(--text);">42px</strong>
+      </label>
+    </div>
+
+    <div class="group">
+      <button type="button" class="chip" id="undoBtn" disabled>↩ Undo</button>
+      <button type="button" class="chip" id="clearBtn" disabled>✕ Clear</button>
+    </div>
+  </div>
+
+  <section class="canvas-card">
+    <div class="drop-area" id="dropArea">
+      <div class="empty-state" id="emptyState">
+        <strong>Drop a photo, screenshot, or video here</strong>
+        <p>Or tap <strong>Upload File</strong> above (you can also paste a screenshot with <strong>Ctrl+V</strong>).</p>
+      </div>
+      <canvas id="editorCanvas"></canvas>
+    </div>
+
+    <div class="video-bar" id="videoBar">
+      <button type="button" class="chip" id="playBtn">▶ Play</button>
+      <input type="range" id="seekInput" min="0" max="100" step="0.1" value="0" />
+      <span id="timeLabel" style="color:var(--muted);">00:00 / 00:00</span>
+    </div>
+
+    <div class="export-bar" id="exportBar">
+      <span>Creating blurred video locally... Please wait until playback ends.</span>
+      <button type="button" class="chip" id="stopExportBtn">Stop &amp; Save</button>
+    </div>
+  </section>
+
+  <section class="seo-note">
+    <h2>How Zivo Blur Works Locally</h2>
+    <p>Zivo Blur processes every image, screenshot, and video locally inside your browser with HTML5 Canvas—zero server uploads. Pick the Pen to paint over sensitive spots, or use Square, Rectangle, and Circle to blur whole sections cleanly, then download in one click.</p>
+  </section>
+</div>
+
+<footer>
+  Zivo Blur • Contact: <a href="mailto:zivo.devlopr@gmail.com">zivo.devlopr@gmail.com</a> •
+  <a href="./fgehfjkdslfgy-erhfndfyfdhigefjrhf.html">Owner Console</a>
+</footer>
+
+<video id="sourceVideo" playsinline muted crossorigin="anonymous" style="display:none;"></video>
+
+<script>
+(() => {
+  const APP_ID = 'zivo-blur';
+  const APP_NAME = 'Zivo Blur';
+
+  // Service Worker & PWA Install
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+
+  let deferredInstall = null;
+  const installBtn = document.getElementById('installBtn');
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isStandalone) installBtn.style.display = 'none';
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstall = e;
+    installBtn.style.display = 'inline-flex';
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstall = null;
+    installBtn.style.display = 'none';
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (deferredInstall) {
+      deferredInstall.prompt();
+      await deferredInstall.userChoice;
+      deferredInstall = null;
+    } else {
+      alert('To install Zivo Blur: open your browser menu (⋮ or share icon) and tap "Install app" or "Add to Home Screen".');
+    }
+  });
+
+  const netBadge = document.getElementById('netBadge');
+  function updateOnlineState() {
+    if (navigator.onLine) {
+      netBadge.classList.remove('offline');
+      netBadge.textContent = 'Offline Ready';
+    } else {
+      netBadge.classList.add('offline');
+      netBadge.textContent = 'Offline Mode';
+    }
+  }
+  window.addEventListener('online', updateOnlineState);
+  window.addEventListener('offline', updateOnlineState);
+  updateOnlineState();
+
+  // Shared Multi-App Telemetry Helper (Works across all Zivo apps on the same origin)
+  const TELEMETRY_KEY = 'zivo_ecosystem_telemetry_v1';
+
+  function getDeviceLabel() {
+    const ua = navigator.userAgent || '';
+    if (/Android/i.test(ua)) return 'Android';
+    if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
+    if (/Windows/i.test(ua)) return 'Windows';
+    if (/Mac/i.test(ua)) return 'macOS';
+    return window.innerWidth <= 768 ? 'Mobile' : 'Desktop';
+  }
+
+  function getOrCreateVisitorId() {
+    let vid = localStorage.getItem('zivo_visitor_id');
+    if (!vid) {
+      vid = 'usr_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now().toString(36);
+      localStorage.setItem('zivo_visitor_id', vid);
+    }
+    return vid;
+  }
+
+  function readTelemetry() {
+    try {
+      return JSON.parse(localStorage.getItem(TELEMETRY_KEY) || '{}');
+    } catch (_) {
+      return {};
+    }
+  }
+
+  function writeTelemetry(data) {
+    try {
+      localStorage.setItem(TELEMETRY_KEY, JSON.stringify(data));
+      // Keep backward-compatible legacy keys in sync
+      localStorage.setItem('zivo_bular_conversions', String(data.totalFilesProcessed || 0));
+      localStorage.setItem('zivo_bular_history', JSON.stringify(data.events || []));
+    } catch (_) {}
+  }
+
+  function recordVisit() {
+    const data = readTelemetry();
+    data.apps = data.apps || {};
+    data.apps[APP_ID] = data.apps[APP_ID] || {
+      appId: APP_ID,
+      appName: APP_NAME,
+      visits: 0,
+      filesProcessed: 0,
+      visitors: []
+    };
+    const vid = getOrCreateVisitorId();
+    data.apps[APP_ID].visits += 1;
+    if (!data.apps[APP_ID].visitors.includes(vid)) {
+      data.apps[APP_ID].visitors.push(vid);
+    }
+    data.visitors = data.visitors || [];
+    if (!data.visitors.includes(vid)) {
+      data.visitors.push(vid);
+    }
+    writeTelemetry(data);
+  }
+
+  function recordFileProcessed(fileType, fileName, methodSummary) {
+    const data = readTelemetry();
+    data.apps = data.apps || {};
+    data.apps[APP_ID] = data.apps[APP_ID] || {
+      appId: APP_ID,
+      appName: APP_NAME,
+      visits: 1,
+      filesProcessed: 0,
+      visitors: []
+    };
+    const vid = getOrCreateVisitorId();
+    if (!data.apps[APP_ID].visitors.includes(vid)) {
+      data.apps[APP_ID].visitors.push(vid);
+    }
+    data.apps[APP_ID].filesProcessed += 1;
+    data.totalFilesProcessed = (data.totalFilesProcessed || 0) + 1;
+
+    data.events = data.events || [];
+    data.events.unshift({
+      id: Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+      appId: APP_ID,
+      appName: APP_NAME,
+      visitorId: vid,
+      type: fileType,
+      name: fileName || 'output',
+      how: methodSummary,
+      device: getDeviceLabel(),
+      timestamp: new Date().toISOString()
+    });
+    data.events = data.events.slice(0, 150);
+    writeTelemetry(data);
+  }
+
+  recordVisit();
+
+  // DOM References
+  const fileInput = document.getElementById('fileInput');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const penTopBtn = document.getElementById('penTopBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const dropArea = document.getElementById('dropArea');
+  const emptyState = document.getElementById('emptyState');
+  const canvas = document.getElementById('editorCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const shapeChips = [
+    document.getElementById('shapePen'),
+    document.getElementById('shapeSquare'),
+    document.getElementById('shapeRect'),
+    document.getElementById('shapeCircle')
+  ];
+  const modeBlur = document.getElementById('modeBlur');
+  const modePixel = document.getElementById('modePixel');
+  const strengthInput = document.getElementById('strengthInput');
+  const strengthLabel = document.getElementById('strengthLabel');
+  const penSizeInput = document.getElementById('penSizeInput');
+  const penSizeLabel = document.getElementById('penSizeLabel');
+  const penSizePill = document.getElementById('penSizePill');
+  const undoBtn = document.getElementById('undoBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  const videoEl = document.getElementById('sourceVideo');
+  const videoBar = document.getElementById('videoBar');
+  const playBtn = document.getElementById('playBtn');
+  const seekInput = document.getElementById('seekInput');
+  const timeLabel = document.getElementById('timeLabel');
+  const exportBar = document.getElementById('exportBar');
+  const stopExportBtn = document.getElementById('stopExportBtn');
+
+  const effectCanvas = document.createElement('canvas');
+  const effectCtx = effectCanvas.getContext('2d');
+  const maskCanvas = document.createElement('canvas');
+  const maskCtx = maskCanvas.getContext('2d');
+
+  let mediaKind = null;
+  let imgSource = null;
+  let baseName = 'zivo-blur';
+  let shapes = [];
+  let activeShapeObj = null;
+  let drawing = false;
+  let tool = 'pen';
+  let blurMode = 'blur';
+  let animFrame = null;
+  let exportingVideo = false;
+  let mediaRec = null;
+
+  function setTool(nextTool) {
+    tool = nextTool;
+    shapeChips.forEach(c => c.classList.toggle('active', c.dataset.shape === nextTool));
+    penTopBtn.classList.toggle('active', nextTool === 'pen');
+    penSizePill.style.display = nextTool === 'pen' ? 'inline-flex' : 'none';
+  }
+
+  shapeChips.forEach(chip => chip.addEventListener('click', () => setTool(chip.dataset.shape)));
+
+  penTopBtn.addEventListener('click', () => {
+    setTool('pen');
+    if (!mediaKind) fileInput.click();
+  });
+
+  modeBlur.addEventListener('click', () => {
+    blurMode = 'blur';
+    modeBlur.classList.add('active');
+    modePixel.classList.remove('active');
+  });
+  modePixel.addEventListener('click', () => {
+    blurMode = 'pixelate';
+    modePixel.classList.add('active');
+    modeBlur.classList.remove('active');
+  });
+
+  strengthInput.addEventListener('input', () => {
+    strengthLabel.textContent = `${strengthInput.value}px`;
+    if (mediaKind === 'image') draw();
+  });
+  penSizeInput.addEventListener('input', () => {
+    penSizeLabel.textContent = `${penSizeInput.value}px`;
+  });
+
+  function refreshUndoClear() {
+    undoBtn.disabled = shapes.length === 0;
+    clearBtn.disabled = shapes.length === 0;
+  }
+
+  undoBtn.addEventListener('click', () => {
+    if (!shapes.length) return;
+    shapes.pop();
+    refreshUndoClear();
+    if (mediaKind === 'image') draw();
+  });
+
+  clearBtn.addEventListener('click', () => {
+    shapes = [];
+    refreshUndoClear();
+    if (mediaKind === 'image') draw();
+  });
+
+  uploadBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) loadFile(e.target.files[0]);
+  });
+
+  ['dragenter', 'dragover'].forEach(ev => {
+    dropArea.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(ev => {
+    dropArea.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropArea.classList.remove('dragover');
+    });
+  });
+  dropArea.addEventListener('drop', (e) => {
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+  });
+
+  window.addEventListener('paste', (e) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const blob = item.getAsFile();
+        if (blob) loadFile(blob, 'screenshot.png');
+        break;
+      }
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+      e.preventDefault();
+      undoBtn.click();
+    } else if (e.code === 'Space' && mediaKind === 'video' && document.activeElement.tagName !== 'BUTTON') {
+      e.preventDefault();
+      playBtn.click();
+    }
+  });
+
+  function initStage(w, h) {
+    canvas.width = w;
+    canvas.height = h;
+    effectCanvas.width = w;
+    effectCanvas.height = h;
+    maskCanvas.width = w;
+    maskCanvas.height = h;
+    emptyState.style.display = 'none';
+    canvas.style.display = 'block';
+    downloadBtn.disabled = false;
+  }
+
+  function loadFile(file, customName) {
+    if (animFrame) cancelAnimationFrame(animFrame);
+    videoEl.pause();
+    shapes = [];
+    refreshUndoClear();
+    baseName = (customName || file.name || 'zivo-blur').replace(/\.[^/.]+$/, '');
+    const url = URL.createObjectURL(file);
+
+    if (file.type.startsWith('image/')) {
+      mediaKind = 'image';
+      videoBar.classList.remove('visible');
+      const img = new Image();
+      img.onload = () => {
+        imgSource = img;
+        initStage(img.naturalWidth, img.naturalHeight);
+        draw();
+      };
+      img.src = url;
+    } else if (file.type.startsWith('video/')) {
+      mediaKind = 'video';
+      imgSource = null;
+      videoEl.src = url;
+      videoEl.muted = false;
+      videoEl.onloadedmetadata = () => {
+        initStage(videoEl.videoWidth, videoEl.videoHeight);
+        videoBar.classList.add('visible');
+        videoEl.currentTime = 0;
+        runVideoLoop();
+      };
+    } else {
+      alert('Please choose an image or video file.');
+    }
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (videoEl.paused) {
+      videoEl.play();
+      playBtn.textContent = '⏸ Pause';
+    } else {
+      videoEl.pause();
+      playBtn.textContent = '▶ Play';
+    }
+  });
+
+  seekInput.addEventListener('input', () => {
+    if (videoEl.duration) videoEl.currentTime = (seekInput.value / 100) * videoEl.duration;
+  });
+
+  function fmtTime(sec) {
+    if (!isFinite(sec)) return '00:00';
+    return `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
+  }
+
+  function runVideoLoop() {
+    function step() {
+      if (mediaKind === 'video') {
+        draw();
+        if (videoEl.duration) {
+          seekInput.value = (videoEl.currentTime / videoEl.duration) * 100;
+          timeLabel.textContent = `${fmtTime(videoEl.currentTime)} / ${fmtTime(videoEl.duration)}`;
+        }
+        playBtn.textContent = videoEl.paused ? '▶ Play' : '⏸ Pause';
+      }
+      animFrame = requestAnimationFrame(step);
+    }
+    animFrame = requestAnimationFrame(step);
+  }
+
+  function getPt(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) * (canvas.width / rect.width),
+      y: (e.clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  canvas.addEventListener('pointerdown', (e) => {
+    if (!mediaKind || exportingVideo) return;
+    canvas.setPointerCapture(e.pointerId);
+    drawing = true;
+    const pt = getPt(e);
+    const strength = parseInt(strengthInput.value, 10);
+
+    if (tool === 'pen') {
+      const ratio = Math.max(canvas.width, canvas.height) / 900;
+      activeShapeObj = {
+        kind: 'pen',
+        mode: blurMode,
+        strength,
+        size: parseInt(penSizeInput.value, 10) * Math.max(1, ratio),
+        pts: [pt]
+      };
+    } else {
+      activeShapeObj = {
+        kind: tool,
+        mode: blurMode,
+        strength,
+        x: pt.x,
+        y: pt.y,
+        w: 0,
+        h: 0
+      };
+    }
+    if (mediaKind === 'image') draw();
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!drawing || !activeShapeObj) return;
+    const pt = getPt(e);
+    if (activeShapeObj.kind === 'pen') {
+      activeShapeObj.pts.push(pt);
+    } else if (activeShapeObj.kind === 'square') {
+      const dx = pt.x - activeShapeObj.x;
+      const dy = pt.y - activeShapeObj.y;
+      const side = Math.max(Math.abs(dx), Math.abs(dy));
+      activeShapeObj.w = dx < 0 ? -side : side;
+      activeShapeObj.h = dy < 0 ? -side : side;
+    } else {
+      activeShapeObj.w = pt.x - activeShapeObj.x;
+      activeShapeObj.h = pt.y - activeShapeObj.y;
+    }
+    if (mediaKind === 'image') draw();
+  });
+
+  function endShape() {
+    if (!drawing || !activeShapeObj) return;
+    drawing = false;
+    const okBox = activeShapeObj.kind !== 'pen' && Math.abs(activeShapeObj.w) > 4 && Math.abs(activeShapeObj.h) > 4;
+    const okPen = activeShapeObj.kind === 'pen' && activeShapeObj.pts.length > 0;
+    if (okBox || okPen) {
+      shapes.push(activeShapeObj);
+      refreshUndoClear();
+    }
+    activeShapeObj = null;
+    if (mediaKind === 'image') draw();
+  }
+  canvas.addEventListener('pointerup', endShape);
+  canvas.addEventListener('pointercancel', endShape);
+
+  function draw() {
+    const src = mediaKind === 'image' ? imgSource : videoEl;
+    if (!src) return;
+    const w = canvas.width;
+    const h = canvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+    ctx.drawImage(src, 0, 0, w, h);
+
+    const list = activeShapeObj ? [...shapes, activeShapeObj] : shapes;
+    if (!list.length) return;
+
+    for (const item of list) {
+      maskCtx.clearRect(0, 0, w, h);
+      maskCtx.fillStyle = '#fff';
+      maskCtx.strokeStyle = '#fff';
+
+      if (item.kind === 'rect' || item.kind === 'square') {
+        maskCtx.fillRect(item.x, item.y, item.w, item.h);
+      } else if (item.kind === 'circle') {
+        maskCtx.beginPath();
+        maskCtx.ellipse(
+          item.x + item.w / 2,
+          item.y + item.h / 2,
+          Math.abs(item.w) / 2,
+          Math.abs(item.h) / 2,
+          0, 0, Math.PI * 2
+        );
+        maskCtx.fill();
+      } else if (item.kind === 'pen') {
+        maskCtx.lineCap = 'round';
+        maskCtx.lineJoin = 'round';
+        maskCtx.lineWidth = item.size;
+        maskCtx.beginPath();
+        item.pts.forEach((p, idx) => idx === 0 ? maskCtx.moveTo(p.x, p.y) : maskCtx.lineTo(p.x, p.y));
+        if (item.pts.length === 1) {
+          maskCtx.arc(item.pts[0].x, item.pts[0].y, item.size / 2, 0, Math.PI * 2);
+          maskCtx.fill();
+        } else {
+          maskCtx.stroke();
+        }
+      }
+
+      effectCtx.save();
+      effectCtx.clearRect(0, 0, w, h);
+
+      if (item.mode === 'pixelate') {
+        const block = Math.max(6, Math.round(item.strength * 0.9));
+        const sw = Math.max(1, Math.floor(w / block));
+        const sh = Math.max(1, Math.floor(h / block));
+        effectCtx.imageSmoothingEnabled = false;
+        effectCtx.drawImage(src, 0, 0, sw, sh);
+        effectCtx.drawImage(effectCanvas, 0, 0, sw, sh, 0, 0, w, h);
+      } else if ('filter' in effectCtx) {
+        effectCtx.filter = `blur(${item.strength}px)`;
+        effectCtx.drawImage(src, 0, 0, w, h);
+        effectCtx.filter = 'none';
+      } else {
+        const sw = Math.max(1, Math.floor(w / 18));
+        const sh = Math.max(1, Math.floor(h / 18));
+        effectCtx.drawImage(src, 0, 0, sw, sh);
+        effectCtx.drawImage(effectCanvas, 0, 0, sw, sh, 0, 0, w, h);
+      }
+
+      effectCtx.globalCompositeOperation = 'destination-in';
+      effectCtx.drawImage(maskCanvas, 0, 0);
+      effectCtx.restore();
+      ctx.drawImage(effectCanvas, 0, 0);
+    }
+
+    if (drawing && activeShapeObj && activeShapeObj.kind !== 'pen') {
+      ctx.save();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = Math.max(2, w / 450);
+      ctx.setLineDash([6, 4]);
+      if (activeShapeObj.kind === 'circle') {
+        ctx.beginPath();
+        ctx.ellipse(
+          activeShapeObj.x + activeShapeObj.w / 2,
+          activeShapeObj.y + activeShapeObj.h / 2,
+          Math.abs(activeShapeObj.w) / 2,
+          Math.abs(activeShapeObj.h) / 2,
+          0, 0, Math.PI * 2
+        );
+        ctx.stroke();
+      } else {
+        ctx.strokeRect(activeShapeObj.x, activeShapeObj.y, activeShapeObj.w, activeShapeObj.h);
+      }
+      ctx.restore();
+    }
+  }
+
+  function summarizeMethod() {
+    const usedTools = [...new Set(shapes.map(s => s.kind))];
+    const usedModes = [...new Set(shapes.map(s => s.mode))];
+    const tLabel = usedTools.length ? usedTools.join('+') : tool;
+    const mLabel = usedModes.length ? usedModes.join('+') : blurMode;
+    return `${mLabel} (${tLabel}, ${strengthInput.value}px)`;
+  }
+
+  downloadBtn.addEventListener('click', () => {
+    if (!mediaKind) return;
+    if (mediaKind === 'image') {
+      draw();
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        const out = `${baseName}-blurred.png`;
+        saveBlob(blob, out);
+        recordFileProcessed('Image / Screenshot', out, summarizeMethod());
+      }, 'image/png');
+    } else {
+      exportVideo();
+    }
+  });
+
+  function saveBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+  }
+
+  function exportVideo() {
+    if (exportingVideo) return;
+    exportingVideo = true;
+    downloadBtn.disabled = true;
+    exportBar.classList.add('visible');
+
+    const stream = canvas.captureStream(30);
+    try {
+      const vStream = videoEl.captureStream ? videoEl.captureStream() : (videoEl.mozCaptureStream ? videoEl.mozCaptureStream() : null);
+      if (vStream) vStream.getAudioTracks().forEach(t => stream.addTrack(t));
+    } catch (_) {}
+
+    const mimes = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm'];
+    const mime = mimes.find(m => MediaRecorder.isTypeSupported(m)) || '';
+    const ext = mime.includes('mp4') ? 'mp4' : 'webm';
+    const chunks = [];
+    const rec = new MediaRecorder(stream, mime ? { mimeType: mime, videoBitsPerSecond: 5_000_000 } : undefined);
+    mediaRec = rec;
+
+    rec.ondataavailable = (e) => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+    rec.onstop = () => {
+      exportingVideo = false;
+      downloadBtn.disabled = false;
+      exportBar.classList.remove('visible');
+      const out = `${baseName}-blurred.${ext}`;
+      saveBlob(new Blob(chunks, { type: mime || 'video/webm' }), out);
+      recordFileProcessed('Video', out, summarizeMethod());
+    };
+
+    videoEl.pause();
+    videoEl.currentTime = 0;
+    videoEl.loop = false;
+    videoEl.onseeked = () => {
+      videoEl.onseeked = null;
+      rec.start(250);
+      videoEl.play();
+    };
+    videoEl.onended = () => {
+      videoEl.onended = null;
+      if (rec.state !== 'inactive') rec.stop();
+    };
+  }
+
+  stopExportBtn.addEventListener('click', () => {
+    videoEl.pause();
+    if (mediaRec && mediaRec.state !== 'inactive') mediaRec.stop();
+  });
+})();
+</script>
+</body>
+</html>
